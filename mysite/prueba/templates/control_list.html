@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoría Tessox</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        tr:nth-child(even) {
+            background-color: #f4f4f4;
+        }
+        .button {
+            padding: 10px 15px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .button.secondary {
+            background-color: #6c757d;
+        }
+        .button.secondary:hover {
+            background-color: #5a6268;
+        }
+        .button.small {
+            font-size: 12px;
+            padding: 5px 10px;
+        }
+        .status {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .status.pendiente {
+            background-color: #ffecb3;
+            color: orange;
+        }
+        .status.en-proceso {
+            background-color: #cce5ff;
+            color: blue;
+        }
+        .status.terminado {
+            background-color: #d4edda;
+            color: green;
+        }
+        .table-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .logout {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Auditoría Tessox - Controles</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Control</th>
+                <th>Código Control</th>
+                <th>Estado Control</th>
+                <th>Ciclo Compañía</th>
+                <th>Acciones</th>
+                <th>Conclusión Pruebas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for control in controles %}
+            <tr>
+                <td>{{ control.id }}</td>
+                <td>{{ control.nombre_control }}</td>
+                <td>{{ control.codigo_control }}</td>
+                <td>
+                    <span class="status {{ control.get_estado_css_class }}">{{ control.estado }}</span>
+                </td>
+                <td>{{ control.ciclo }} - {{ control.company }}</td>
+                <td>
+                    <div class="table-actions">
+                        <a href="#" class="button small">Encabezado</a>
+                        <a href="#" class="button secondary small">Diseño</a>
+                        <a href="#" class="button small">Operatividad</a>
+                    </div>
+                </td>
+                <td>
+                    {{ control.conclusion_pruebas|default:"No Evaluado" }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="logout">
+        <a href="/" class="button secondary">Cerrar Sesión</a>
+    </div>
+</body>
+</html>
